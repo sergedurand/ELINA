@@ -22,6 +22,16 @@
 #  CMake project to be used to compile GPUPoly on platforms not handled by ELINA.
 #
 
+macro(print_all_variables)
+    message(STATUS "print_all_variables------------------------------------------{")
+    get_cmake_property(_variableNames VARIABLES)
+    foreach (_variableName ${_variableNames})
+        message(STATUS "${_variableName}=${${_variableName}}")
+    endforeach()
+    message(STATUS "print_all_variables------------------------------------------}")
+endmacro()
+
+
 cmake_minimum_required (VERSION 3.18.6)
 set(CMAKE_CUDA_COMPILER "/usr/local/cuda-10.2/bin/nvcc")
 project ("GPUPoly" VERSION 0.13.0 LANGUAGES CXX CUDA)
@@ -58,9 +68,9 @@ add_executable (testGPUPoly "test.cpp")
 target_include_directories (testGPUPoly PRIVATE ${PROJECT_BINARY_DIR})
 target_include_directories(testGPUPoly PRIVATE .)
 target_link_libraries(testGPUPoly gpupoly)
-
+print_all_variables()
 #add_executable (benchmark "benchmark.cu")
-#set_target_properties(benchmark PROPERTIES CUDA_ARCHITECTURES 61)
+#set_target_properties(benchmark PROPERTIES CUDA_ARCHITECTURES "35;50;61;72")
 #target_include_directories (benchmark PRIVATE ${PROJECT_BINARY_DIR})
 #target_include_directories(benchmark PRIVATE .)
 #target_link_libraries(benchmark gpupoly)
